@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Interactivo: Conflicto en Producción</title>
+    
+    <!-- 
+        Chosen Palette: Calm Neutrals (Fondo: bg-gray-100, Contenido: bg-white, Acentos: text-blue-700, Gráfico: bg-blue-600)
+        
+        Application Structure Plan: He diseñado una SPA temática de una sola página en lugar de una presentación lineal. La estructura se divide en 4 secciones lógicas a las que se accede por scroll o un encabezado fijo: 1. El Problema (Descripción e Impacto/KPIs), 2. Las Perspectivas (Comparación interactiva de posturas), 3. La Solución (Proceso y Acuerdos), 4. La Conclusión (Lecciones). Esta arquitectura es superior a la de las diapositivas porque agrupa el contenido por su función (diagnóstico, análisis de causa raíz, resolución) y permite al usuario explorar el caso de forma no lineal, facilitando una comprensión más profunda. La interactividad (gráfica y pestañas) está diseñada para resaltar las áreas clave: el impacto en el negocio y la raíz del conflicto (las dos versiones).
+        
+        Visualization & Content Choices: 
+        - Info: KPIs (Slide 3) -> Goal: Informar/Comparar -> Viz: Gráfica de Barras Horizontales (Chart.js/Canvas) -> Interaction: Tooltip al pasar el mouse -> Justification: Muestra visualmente la magnitud del impacto negativo en el negocio. Los datos (-30%, +25%, etc.) se infieren para dar vida a los KPIs. `indexAxis: 'y'` se usa para legibilidad de las etiquetas.
+        - Info: Posturas Jefe vs Operarios (Slides 4, 5) -> Goal: Comparar -> Viz: Pestañas Interactivas (HTML/CSS/JS) -> Interaction: Clic para cambiar de vista -> Justification: Es la forma más directa y atractiva de comparar las dos perspectivas opuestas, que son el núcleo del conflicto.
+        - Info: Proceso de Mediación (Slide 7) -> Goal: Organizar/Informar -> Viz: Diagrama de Pasos (HTML/CSS/Tailwind) -> Interaction: Estático -> Justification: Presenta el flujo del proceso de forma clara y secuencial sin necesidad de librerías.
+        - Info: Demandas (Slide 6) -> Goal: Comparar -> Viz: Diseño de 2 Columnas (HTML/Tailwind) -> Justification: Contraste visual simple y efectivo.
+        - Info: Resto del texto (Slides 1, 2, 8, 9) -> Goal: Informar -> Viz: Bloques de texto HTML/Tailwind -> Justification: Contenido textual estándar.
+        
+        CONFIRMATION: NO SVG graphics used. NO Mermaid JS used.
+    -->
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .tab-btn.active {
+            border-bottom: 2px solid #2563EB; /* blue-600 */
+            color: #1D4ED8; /* blue-800 */
+            font-weight: 600;
+        }
+        .tab-btn {
+            border-bottom: 2px solid transparent;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Encabezado Fijo de Navegación -->
+    <header class="sticky top-0 bg-white shadow-md z-50">
+        <nav class="container mx-auto max-w-6xl px-6 py-3 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-blue-800">Conflicto en Producción</h1>
+            <div class="hidden md:flex space-x-6">
+                <a href="#problema" class="text-gray-600 hover:text-blue-700 font-medium">El Problema</a>
+                <a href="#perspectivas" class="text-gray-600 hover:text-blue-700 font-medium">Las Perspectivas</a>
+                <a href="#solucion" class="text-gray-600 hover:text-blue-700 font-medium">La Solución</a>
+                <a href="#conclusion" class="text-gray-600 hover:text-blue-700 font-medium">Conclusión</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="container mx-auto max-w-6xl p-4 md:p-8">
+
+        <!-- SECCIÓN 1: EL PROBLEMA -->
+        <section id="problema" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-blue-900 mb-4">El Problema: Diagnóstico Inicial</h2>
+            <p class="text-lg text-gray-700 mb-8">
+                Esta sección describe el conflicto central en la fábrica de zapatos, la postura inicial de la gerencia y, lo más importante, el impacto tangible que esta tensión estaba teniendo en los indicadores clave de rendimiento (KPIs) del negocio.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Descripción del Caso -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Tensión en la Fábrica</h3>
+                    <ul class="space-y-3 list-disc list-outside ml-5 text-gray-700">
+                        <li><span class="font-semibold">Escenario:</span> Fábrica de zapatos, Departamento de Producción.</li>
+                        <li><span class="font-semibold">Conflicto:</span> Tensión palpable entre el jefe de área y los operarios.</li>
+                        <li><span class="font-semibold">Acusación del Jefe:</span> Argumenta que los operarios desobedecen indicaciones y usan mal las máquinas, a pesar de haber recibido capacitaciones.</li>
+                    </ul>
+                </div>
+
+                <!-- Consecuencias Críticas -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Consecuencias Críticas (KPIs)</h3>
+                    <p class="text-sm text-gray-600 mb-4">Gráfica interactiva que visualiza el impacto negativo en el negocio.</p>
+                    <div class="chart-container">
+                        <canvas id="impactChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 2: LAS PERSPECTIVAS (Causa Raíz) -->
+        <section id="perspectivas" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-blue-900 mb-4">Las Perspectivas: Causa Raíz</h2>
+            <p class="text-lg text-gray-700 mb-8">
+                Para entender el origen del conflicto, fue crucial investigar ambas posturas. Esta sección permite comparar interactivamente la visión del jefe con las causas ocultas reveladas por los operarios, seguidas de las demandas irreconciliables de cada parte.
+            </p>
+
+            <!-- Pestañas Interactivas -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-8">
+                <div class="border-b border-gray-200 mb-4">
+                    <nav class="flex -mb-px space-x-6">
+                        <button id="btnJefe" class="tab-btn py-4 px-1 text-lg text-gray-600 hover:text-blue-700">
+                            Perspectiva del Jefe
+                        </button>
+                        <button id="btnOperarios" class="tab-btn py-4 px-1 text-lg text-gray-600 hover:text-blue-700">
+                            Perspectiva de Operarios
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Contenido Pestaña Jefe -->
+                <div id="contentJefe" class="tab-content">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-xl font-semibold text-red-700 mb-3">Causa (Según el Jefe)</h4>
+                            <ul class="list-disc list-outside ml-5 space-y-2">
+                                <li>"Mala actitud" de los operarios.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-red-700 mb-3">Efectos en su Rol</h4>
+                            <ul class="list-disc list-outside ml-5 space-y-2">
+                                <li>Aplica Micro Gerencia (supervisión excesiva).</li>
+                                <li>Descuida sus deberes principales de gestión.</li>
+                                <li>Nula confianza en el equipo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contenido Pestaña Operarios -->
+                <div id="contentOperarios" class="tab-content" style="display: none;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-xl font-semibold text-green-700 mb-3">Causas Ocultas (Según Indagación)</h4>
+                            <ul class="list-disc list-outside ml-5 space-y-2">
+                                <li>Jefe no escucha (Comunicación unidireccional).</li>
+                                <li>Maquinaria obsoleta que obliga a usar técnicas distintas.</li>
+                                <li>No se sienten valorados (percepción de acoso).</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-green-700 mb-3">Efectos en los Operarios</h4>
+                            <ul class="list-disc list-outside ml-5 space-y-2">
+                                <li>Desmotivación y falta de compromiso.</li>
+                                <li>Sensación de acoso laboral.</li>
+                                <li>Rumores y mal ambiente.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Puntos de Quiebre -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">Puntos de Quiebre: Exigencias Mutuas</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="border-r-0 md:border-r md:pr-8 border-gray-200">
+                        <h4 class="text-xl font-semibold text-red-700 mb-3">Jefe Exige:</h4>
+                        <ul class="list-disc list-outside ml-5 space-y-2 text-gray-700">
+                            <li>Obediencia total.</li>
+                            <li>Mejor actitud del personal.</li>
+                            <li>Despido de operarios "indisciplinados".</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-xl font-semibold text-green-700 mb-3">Operarios Exigen:</h4>
+                        <ul class="list-disc list-outside ml-5 space-y-2 text-gray-700">
+                            <li>Comunicación abierta y ser escuchados.</li>
+                            <li>Nuevos equipos y maquinaria.</li>
+                            <li>Despido del jefe.</li>
+                            <li>Garantía de no despidos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NUEVA SECCIÓN IA: Analizar Exigencias -->
+            <div class="mt-8 bg-white p-6 rounded-lg shadow-lg text-center">
+                <h3 class="text-xl font-semibold text-gray-800 mb-4">Asistente de Mediación</h3>
+                <p class="text-gray-600 mb-4">Usa la IA para analizar las exigencias de ambas partes y encontrar un punto de partida para la negociación.</p>
+                <button id="btnAnalizarExigencias" class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors inline-flex items-center">
+                    <span class="mr-2">✨ Analizar Exigencias con IA</span>
+                    <div id="loadingExigencias" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                </button>
+                <div id="resultadoExigencias" class="mt-4 text-left p-4 bg-gray-50 rounded-md text-gray-700" style="display: none;"></div>
+            </div>
+
+        </section>
+
+        <!-- SECCIÓN 3: LA SOLUCIÓN -->
+        <section id="solucion" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-blue-900 mb-4">La Solución: Mediación y Acuerdos</h2>
+            <p class="text-lg text-gray-700 mb-8">
+                La resolución del conflicto se gestionó a través de un proceso de mediación estructurado. Esta sección detalla las fases de esa intervención y los compromisos concretos que ambas partes acordaron para restaurar la productividad y el ambiente laboral.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Proceso de Mediación -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Proceso: La Mediación</h3>
+                    <p class="text-gray-600 mb-4">Se utilizó una guía imparcial para facilitar el diálogo.</p>
+                    <ol class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-lg mr-4">1</span>
+                            <span class="text-gray-700"><span class="font-semibold">Profundizar:</span> Realización de entrevistas personales y anónimas.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-lg mr-4">2</span>
+                            <span class="text-gray-700"><span class="font-semibold">Predisponer:</span> Pláticas separadas (Caucus) para concientizar sobre la mejora.</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-blue-600 text-white font-bold text-lg mr-4">3</span>
+                            <span class="text-gray-700"><span class="font-semibold">Confrontar:</span> Mesa de diálogo guiada e imparcial.</span>
+                        </li>
+                    </ol>
+                    <div class="mt-6 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-800 p-4 rounded-md">
+                        <p><span class="font-bold">Reto Principal:</span> Lograr que el jefe de área aceptara su parte de responsabilidad y se comprometiera a cambiar su gestión.</p>
+                    </div>
+                </div>
+
+                <!-- Acuerdos Logrados -->
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-4">Acuerdos Logrados</h3>
+                    <ul id="listaAcuerdos" class="list-disc list-outside ml-5 space-y-3 text-gray-700">
+                        <li>Ambas partes mantendrán una <span class="font-semibold">comunicación abierta</span>.</li>
+                        <li>Fin a las prácticas de <span class="font-semibold">micro gerencia</span> por parte del jefe.</li>
+                        <li>Se realizará una solicitud formal de <span class="font-semibold">nuevas máquinas</span> a la gerencia.</li>
+                        <li>Los operarios se comprometen a lograr metas (hasta donde el equipo lo permita).</li>
+                        <li>Garantía: <span class="font-semibold">Ningún operario será despedido</span>.</li>
+                        <li>Se implementará un reconocimiento: <span class="font-semibold">"Empleado del Mes"</span>.</li>
+                    </ul>
+
+                    <!-- NUEVO BOTÓN IA: Generar Borrador -->
+                    <div class="mt-6 text-center border-t pt-6">
+                        <button id="btnGenerarAnuncio" class="bg-green-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors inline-flex items-center">
+                            <span class="mr-2">✨ Generar Borrador de Anuncio (IA)</span>
+                            <div id="loadingAnuncio" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 4: CONCLUSIÓN -->
+        <section id="conclusion" class="mb-12 scroll-mt-20">
+            <h2 class="text-3xl font-bold text-blue-900 mb-4">Conclusión: Lecciones Aprendidas</h2>
+            <p class="text-lg text-gray-700 mb-8">
+                El análisis final revela que la percepción inicial era incorrecta. El liderazgo jugó un papel fundamental en la creación del conflicto, y las soluciones se centraron en corregir la gestión y la comunicación, no solo en culpar a los operarios.
+            </p>
+
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <span class="text-blue-600 text-2xl mr-3">✔</span>
+                        <div>
+                            <h4 class="font-semibold text-xl">Responsabilidad del Liderazgo</h4>
+                            <p class="text-gray-700">La indagación reveló que la mayor responsabilidad recaía en el jefe de área (liderazgo y comunicación deficientes), no solo en la "mala actitud" de los operarios.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-blue-600 text-2xl mr-3">✔</span>
+                        <div>
+                            <h4 class="font-semibold text-xl">Acción Enfocada</h4>
+                            <p class="text-gray-700">Los acuerdos se centraron en erradicar las causas raíz: mejorar la comunicación, eliminar la micro gerencia y asegurar el cumplimiento de metas de forma realista.</p>
+                        </div>
+                    </li>
+                    <li class="flex items-start">
+                        <span class="text-gray-500 text-2xl mr-3">ⓘ</span>
+                        <div>
+                            <h4 class="font-semibold text-xl text-gray-600">Alternativas No Implementadas</h4>
+                            <p class="text-gray-600">Se consideraron otras opciones, como la capacitación intensiva en liderazgo al jefe, su cambio de área, o el despido de las partes.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="text-center p-6 bg-gray-800 text-gray-300 mt-12">
+        <p>&copy; 2024 Análisis de Productividad Humana | ITS Comalcalco. Esta es una SPA de demostración.</p>
+    </footer>
+
+    <!-- NUEVO MODAL PARA RESPUESTA DE IA -->
+    <div id="iaModal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-lg w-full">
+            <div class="flex justify-between items-center border-b p-4">
+                <h3 id="modalTitle" class="text-xl font-semibold text-blue-900">Borrador Generado por IA</h3>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+            </div>
+            <div id="modalBody" class="p-6 text-gray-700 overflow-y-auto" style="max-height: 60vh;">
+                <!-- Contenido de IA se insertará aquí -->
+            </div>
+            <div class="border-t p-4 bg-gray-50 text-right rounded-b-lg">
+                <button id="closeModalBtn" class="bg-gray-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+    // --- INICIO: Lógica de la API de Gemini (via backend local) ---
+    // Ahora el frontend delega la llamada de IA al backend en /api/gemini
+    // El backend necesita la variable de entorno GEMINI_API_KEY para funcionar.
+    const apiUrl = '/api/gemini';
+
+        /**
+         * Realiza una llamada fetch con reintentos y backoff exponencial.
+         */
+        async function fetchWithBackoff(url, options, retries = 3, delay = 1000) {
+            try {
+                const response = await fetch(url, options);
+                if (!response.ok) {
+                    if (response.status === 429 && retries > 0) {
+                        // console.log(`Throttled. Retrying in ${delay}ms... (${retries} retries left)`);
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                        return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                    }
+                    throw new Error(`Error en la API: ${response.statusText}`);
+                }
+                return response.json();
+            } catch (error) {
+                if (retries > 0) {
+                    // console.log(`Fetch error. Retrying in ${delay}ms... (${retries} retries left)`);
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    return fetchWithBackoff(url, options, retries - 1, delay * 2);
+                }
+                // console.error("Error final en fetchWithBackoff:", error);
+                throw error;
+            }
+        }
+
+        /**
+         * Llama a la API de Gemini con un system prompt y un user query.
+         */
+        async function callGeminiAPI(systemPrompt, userQuery) {
+            // El backend espera { systemPrompt, userQuery }
+            const options = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ systemPrompt, userQuery })
+            };
+
+            try {
+                const result = await fetchWithBackoff(apiUrl, options);
+                // Si el backend devolvió { text: '...' } lo usamos
+                if (result.text) return result.text;
+                // Si el backend devolvió la respuesta raw de Gemini, intentar extraer el texto
+                const candidate = result.candidates?.[0];
+                if (candidate && candidate.content?.parts?.[0]?.text) {
+                    return candidate.content.parts[0].text;
+                }
+                return "Error: No se pudo obtener una respuesta válida de la IA.";
+            } catch (error) {
+                return `Error de conexión con la IA: ${error.message}`;
+            }
+        }
+
+        // --- Funciones auxiliares para UI ---
+        
+        function showLoading(buttonId, loadingId) {
+            document.getElementById(buttonId).disabled = true;
+            document.getElementById(loadingId).classList.remove('hidden');
+        }
+
+        function hideLoading(buttonId, loadingId) {
+            document.getElementById(buttonId).disabled = false;
+            document.getElementById(loadingId).classList.add('hidden');
+        }
+
+        function openModal(title, content) {
+            document.getElementById('modalTitle').textContent = title;
+            // Reemplaza saltos de línea con <br> para formato HTML
+            document.getElementById('modalBody').innerHTML = content.replace(/\n/g, '<br>');
+            document.getElementById('iaModal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('iaModal').classList.add('hidden');
+        }
+
+        // --- FIN: Lógica de la API de Gemini ---
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // Lógica de la Gráfica de Impacto (Chart.js)
+            const ctx = document.getElementById('impactChart').getContext('2d');
+            const impactChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Retraso en Entregas (P.T.)', 'Desperdicio (M.P.)', 'Ausentismo', 'Baja Productividad'],
+                    datasets: [{
+                        label: 'Impacto Negativo (Estimado)',
+                        data: [40, 25, 15, 30], // Datos inferidos para la visualización
+                        backgroundColor: [
+                            'rgba(220, 38, 38, 0.7)', // red-600
+                            'rgba(234, 88, 12, 0.7)', // orange-600
+                            'rgba(202, 138, 4, 0.7)', // yellow-600
+                            'rgba(192, 38, 211, 0.7)' // fuchsia-600
+                        ],
+                        borderColor: [
+                            'rgba(220, 38, 38, 1)',
+                            'rgba(234, 88, 12, 1)',
+                            'rgba(202, 138, 4, 1)',
+                            'rgba(192, 38, 211, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    indexAxis: 'y', // Hace la gráfica de barras horizontal
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ` Impacto: ${context.parsed.x}%`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Impacto Negativo (%)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                autoSkip: false
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Lógica de las Pestañas (Tabs)
+            const btnJefe = document.getElementById('btnJefe');
+            const btnOperarios = document.getElementById('btnOperarios');
+            const contentJefe = document.getElementById('contentJefe');
+            const contentOperarios = document.getElementById('contentOperarios');
+
+            function showTab(tabName) {
+                if (tabName === 'jefe') {
+                    contentJefe.style.display = 'block';
+                    contentOperarios.style.display = 'none';
+                    btnJefe.classList.add('active');
+                    btnOperarios.classList.remove('active');
+                } else {
+                    contentJefe.style.display = 'none';
+                    contentOperarios.style.display = 'block';
+                    btnJefe.classList.remove('active');
+                    btnOperarios.classList.add('active');
+                }
+            }
+
+            btnJefe.addEventListener('click', () => showTab('jefe'));
+            btnOperarios.addEventListener('click', () => showTab('operarios'));
+
+            // Inicializar la primera pestaña
+            showTab('jefe');
+
+            // Lógica de Navegación Suave (Smooth Scroll)
+            document.querySelectorAll('header a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            // --- INICIO: Event Listeners para botones de IA ---
+
+            // Modal
+            const modal = document.getElementById('iaModal');
+            document.getElementById('closeModal').addEventListener('click', closeModal);
+            document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // 1. Analizar Exigencias
+            const btnAnalizarExigencias = document.getElementById('btnAnalizarExigencias');
+            const resultadoExigencias = document.getElementById('resultadoExigencias');
+            
+            btnAnalizarExigencias.addEventListener('click', async () => {
+                showLoading('btnAnalizarExigencias', 'loadingExigencias');
+                resultadoExigencias.style.display = 'none';
+
+                const systemPrompt = "Eres un mediador de conflictos organizacionales experto. Analiza las dos listas de exigencias (Jefe y Operarios) y, en menos de 80 palabras, identifica 2-3 puntos en común o áreas claras para iniciar una negociación. Responde en español.";
+                
+                // Extraer exigencias del HTML (simplificado)
+                const exigenciasJefe = "Obediencia total, Mejor actitud del personal, Despido de operarios indisciplinados.";
+                const exigenciasOperarios = "Comunicación abierta, Nuevos equipos y maquinaria, Despido del jefe, Garantía de no despidos.";
+                const userQuery = `Exigencias del Jefe: ${exigenciasJefe}\nExigencias de los Operarios: ${exigenciasOperarios}`;
+
+                const respuesta = await callGeminiAPI(systemPrompt, userQuery);
+
+                resultadoExigencias.innerHTML = respuesta.replace(/\n/g, '<br>');
+                resultadoExigencias.style.display = 'block';
+                hideLoading('btnAnalizarExigencias', 'loadingExigencias');
+            });
+
+            // 2. Generar Anuncio
+            const btnGenerarAnuncio = document.getElementById('btnGenerarAnuncio');
+            
+            btnGenerarAnuncio.addEventListener('click', async () => {
+                showLoading('btnGenerarAnuncio', 'loadingAnuncio');
+
+                const systemPrompt = "Eres el jefe de área de producción de una fábrica. Escribe un breve comunicado (no más de 100 palabras) para tu equipo, anunciando los nuevos acuerdos de forma positiva y fomentando la colaboración. Tu tono debe ser humilde, optimista y orientado al futuro. Responde en español.";
+                
+                // Extraer acuerdos del HTML
+                const acuerdosItems = document.querySelectorAll('#listaAcuerdos li');
+                let listaAcuerdos = "";
+                acuerdosItems.forEach(item => {
+                    listaAcuerdos += `- ${item.textContent}\n`;
+                });
+                const userQuery = `Hemos llegado a los siguientes acuerdos:\n${listaAcuerdos}\n\nRedacta el comunicado.`;
+
+                const respuesta = await callGeminiAPI(systemPrompt, userQuery);
+
+                openModal("Borrador de Anuncio (IA)", respuesta);
+                hideLoading('btnGenerarAnuncio', 'loadingAnuncio');
+            });
+
+            // --- FIN: Event Listeners para botones de IA ---
+
+        });
+    </script>
+
+</body>
+</html>
+

@@ -1,83 +1,110 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portafolio y CV | Oscar Flores Cruz</title>
-    <!-- Tailwind CSS para un diseño rápido y moderno -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts para una tipografía limpia -->
+    
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Iconos para la información de contacto -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Estilos personalizados para el look Limpio y Cálido -->
     <style>
-        /* Estilo base para la fuente Inter */
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f3f4f6; /* Un gris claro para el fondo */
+            /* Fondo cálido y limpio */
+            background-color: #fcfcfb; /* Similar a stone-50 */
+        }
+
+        /* Estilo de "tag" de habilidad unificado */
+        .tag {
+            background-color: #fffbeb; /* amber-100 */
+            color: #92400e; /* amber-800 */
+            padding: 0.375rem 1rem; /* py-1.5 px-4 */
+            border-radius: 9999px; /* rounded-full */
+            font-weight: 500; /* font-medium */
+            font-size: 0.875rem; /* text-sm */
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .tag:hover {
+            background-color: #fef3c7; /* amber-200 */
+            transform: scale(1.05);
         }
     </style>
 </head>
-<body class="text-gray-800">
 
-    <!-- Contenedor Principal -->
+<body class="text-stone-800 bg-stone-50">
+
     <div class="container mx-auto max-w-4xl p-4 sm:p-6 md:p-8">
-        
-        <!-- Encabezado con Información Personal -->
-        <header class="flex flex-col sm:flex-row items-center bg-white p-6 rounded-2xl shadow-lg mb-8">
-            <div class="w-32 h-32 mb-4 sm:mb-0 sm:mr-8 flex-shrink-0">
-                <img src="https://placehold.co/200x200/e2e8f0/334155?text=OFC" alt="Foto de perfil de Oscar Flores Cruz" class="rounded-full w-full h-full object-cover border-4 border-gray-200">
+
+        <!-- Encabezado Limpio -->
+        <header class="flex flex-col sm:flex-row items-center bg-white p-6 sm:p-8 rounded-3xl shadow-xl mb-12">
+            <div class="w-32 h-32 md:w-40 md:h-40 mb-6 sm:mb-0 sm:mr-8 flex-shrink-0">
+                <img src="https://placehold.co/200x200/e2e8f0/334155?text=OFC" alt="Foto de perfil de Oscar Flores Cruz" class="rounded-full w-full h-full object-cover border-4 border-amber-500 shadow-lg">
             </div>
             <div class="text-center sm:text-left">
-                <h1 class="text-4xl font-bold text-gray-900">Oscar Flores Cruz</h1>
-                <p class="text-xl text-blue-600 font-medium mt-1">Ingeniero Industrial en Formación</p>
-                <div class="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-2 mt-4 text-gray-600">
-                    <a href="tel:9372725125" class="hover:text-blue-600 transition-colors">
+                <h1 class="text-5xl sm:text-6xl font-extrabold text-stone-900 tracking-tighter">Oscar Flores Cruz</h1>
+                <p class="text-2xl sm:text-3xl text-amber-600 font-medium mt-2">Ingeniero Industrial en Formación</p>
+                <div class="flex flex-wrap justify-center sm:justify-start gap-x-6 gap-y-3 mt-6 text-stone-600 text-lg">
+                    <a href="tel:9372725125" class="hover:text-amber-600 transition-colors group">
                         <i class="fas fa-phone mr-2"></i>937 272 5125
                     </a>
-                    <a href="mailto:of183781@gmail.com" class="hover:text-blue-600 transition-colors">
+                    <a href="mailto:of183781@gmail.com" class="hover:text-amber-600 transition-colors group">
                         <i class="fas fa-envelope mr-2"></i>of183781@gmail.com
                     </a>
-                    <a href="https://www.linkedin.com/in/oscar-flores-cruz-72675a266" target="_blank" rel="noopener noreferrer" class="hover:text-blue-600 transition-colors">
+                    <a href="https://www.linkedin.com/in/oscar-flores-cruz-72675a266" target="_blank" rel="noopener noreferrer" class="hover:text-amber-600 transition-colors group">
                         <i class="fab fa-linkedin mr-2"></i>LinkedIn
                     </a>
-                    <span class="hover:text-blue-600">
+                    <span class="text-stone-600">
                         <i class="fas fa-map-marker-alt mr-2"></i>Comalcalco, Tabasco
                     </span>
                 </div>
             </div>
         </header>
 
-        <!-- Contenido del CV en secciones -->
         <main class="space-y-8">
 
             <!-- Sección: Resumen Profesional -->
-            <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Resumen Profesional</h2>
-                <p class="text-gray-700 leading-relaxed">
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Resumen Profesional
+                </h2>
+                <p class="text-stone-700 leading-relaxed text-lg">
                     Ingeniero Industrial en formación con un gran interés y enfoque en el área de administración de proyectos. Busco activamente la oportunidad de aplicar mis conocimientos teóricos, mi capacidad analítica y mi experiencia práctica en la gestión de proyectos de calidad y seguridad. Poseo una sólida formación académica, habilidades en la planificación y seguimiento de tareas, y un firme deseo de desarrollarme profesionalmente en un entorno dinámico y desafiante.
                 </p>
             </section>
 
             <!-- Sección: Educación -->
-            <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Educación</h2>
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Educación
+                </h2>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800">Ingeniería Industrial</h3>
-                    <p class="text-gray-600">Instituto Tecnológico Superior de Comalcalco, Comalcalco, Tabasco.</p>
-                    <p class="text-sm text-gray-500 italic">2021 – Cursando actualmente, en proceso de titulación</p>
+                    <h3 class="text-2xl font-bold text-amber-600 mb-1">Ingeniería Industrial</h3>
+                    <p class="text-stone-600 text-lg">Instituto Tecnológico Superior de Comalcalco, Comalcalco, Tabasco.</p>
+                    <p class="text-md text-stone-500 italic mt-1">2021 – Cursando actualmente, en proceso de titulación</p>
                 </div>
             </section>
 
             <!-- Sección: Experiencia Profesional -->
-            <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Experiencia Profesional</h2>
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Experiencia Profesional
+                </h2>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-800">Practicante de Calidad y Proyectos (Estancia Profesional)</h3>
-                    <p class="text-gray-600 font-medium">Akaal.J, Comalcalco, Tabasco | <span class="text-sm text-gray-500 italic">Agosto 2025 – Diciembre 2025</span></p>
-                    <ul class="list-disc list-inside mt-2 text-gray-700 space-y-2">
+                    <h3 class="text-2xl font-bold text-amber-600 mb-1">Practicante de Calidad y Proyectos (Estancia Profesional)</h3>
+                    <p class="text-stone-600 font-medium text-lg">Akaal.J, Comalcalco, Tabasco | <span class="text-md text-stone-500 italic">Agosto 2025 – Diciembre 2025</span></p>
+                    <ul class="list-disc list-inside mt-3 text-stone-700 space-y-2 text-lg">
                         <li>Lideré el proyecto de "Renovación de la política de la calidad ISO 9001:2025", asegurando la alineación con los nuevos estándares y objetivos de la empresa.</li>
                         <li>Colaboré en la planificación de las fases del proyecto, estableciendo cronogramas y entregables clave utilizando herramientas de gestión.</li>
                         <li>Desarrollé la documentación necesaria, realicé seguimiento de avances y participé en reuniones con los responsables de área para garantizar la correcta implementación.</li>
@@ -86,19 +113,21 @@
             </section>
 
             <!-- Sección: Proyectos Académicos -->
-            <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Proyectos Académicos Relevantes</h2>
-                <div class="space-y-4">
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Proyectos Académicos
+                </h2>
+                <div class="space-y-6">
                     <div>
-                        <h3 class="text-lg font-semibold text-gray-800">Renovación de la Política de Seguridad y Salud en el Trabajo (Empresa: Akaal.J)</h3>
-                        <ul class="list-disc list-inside mt-1 text-gray-700 space-y-1">
+                        <h3 class="text-2xl font-bold text-amber-600 mb-1">Renovación de la Política de Seguridad y Salud en el Trabajo (Empresa: Akaal.J)</h3>
+                        <ul class="list-disc list-inside mt-2 text-stone-700 space-y-1 text-lg">
                             <li>Dirigí el análisis y la actualización de los procedimientos de seguridad y salud.</li>
                             <li>Gestioné el proyecto desde la investigación hasta la propuesta final, coordinando tareas.</li>
                         </ul>
                     </div>
-                    <div class="border-t pt-4">
-                        <h3 class="text-lg font-semibold text-gray-800">Evaluación Económica de Rentabilidad de Tienda de Agroquímicos</h3>
-                        <ul class="list-disc list-inside mt-1 text-gray-700 space-y-1">
+                    <div class="border-t border-stone-200 pt-6">
+                        <h3 class="text-2xl font-bold text-amber-600 mb-1">Evaluación Económica de Rentabilidad de Tienda de Agroquímicos</h3>
+                        <ul class="list-disc list-inside mt-2 text-stone-700 space-y-1 text-lg">
                             <li>Realicé un análisis financiero y de mercado para determinar la viabilidad de un nuevo punto de venta.</li>
                             <li>Gestioné la investigación, análisis de datos, y presenté un informe final con recomendaciones estratégicas.</li>
                         </ul>
@@ -107,60 +136,71 @@
             </section>
 
             <!-- Sección: Habilidades Técnicas -->
-            <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Habilidades Técnicas y Conocimientos</h2>
-                <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Habilidades Técnicas
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-8">
                     <div>
-                        <h3 class="font-semibold text-gray-800 mb-2">Software de Gestión</h3>
-                        <p><span class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Microsoft Project</span></p>
-                        <p class="mt-1"><span class="inline-block bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Trello, Asana</span></p>
+                        <h3 class="text-xl font-semibold text-stone-800 mb-4">Plataformas y Lenguajes</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="tag">Nube de Azure</span>
+                            <span class="tag">Nube de Google</span>
+                            <span class="tag">Python</span>
+                            <span class="tag">SQL</span>
+                            <span class="tag">HTML</span>
+                        </div>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-800 mb-2">Ofimática</h3>
-                        <p><span class="inline-block bg-blue-100 text-blue-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Microsoft Office (Avanzado)</span></p>
+                        <h3 class="text-xl font-semibold text-stone-800 mb-4">Ofimática</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="tag">Paquetería de Office (Avanzado)</span>
+                        </div>
                     </div>
                     <div>
-                        <h3 class="font-semibold text-gray-800 mb-2">Normativas</h3>
-                        <p><span class="inline-block bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">ISO 9001</span></p>
+                        <h3 class="text-xl font-semibold text-stone-800 mb-4">Normativas</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="tag">ISO 9001</span>
+                        </div>
                     </div>
-                    <div class="md:col-span-3">
-                         <h3 class="font-semibold text-gray-800 mb-2">Idiomas</h3>
-                        <p><span class="inline-block bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Español (Nativo)</span> <span class="inline-block bg-gray-100 text-gray-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded-full">Inglés (Intermedio)</span></p>
+                    <div>
+                        <h3 class="text-xl font-semibold text-stone-800 mb-4">Idiomas</h3>
+                        <div class="flex flex-wrap gap-3">
+                            <span class="tag">Español (Nativo)</span>
+                            <span class="tag">Inglés (Intermedio)</span>
+                        </div>
                     </div>
-                </div>
-            </section>
-            
-            <!-- Sección: Habilidades Blandas -->
-            <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Competencias y Habilidades Blandas</h2>
-                <div class="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-gray-700">
-                    <p><strong class="font-semibold text-gray-800">Gestión de Proyectos:</strong> Gran capacidad de organización y planificación.</p>
-                    <p><strong class="font-semibold text-gray-800">Aceptación de Errores:</strong> Veo el fracaso como una oportunidad de aprendizaje.</p>
-                    <p><strong class="font-semibold text-gray-800">Disciplina:</strong> Altamente perseverante y con tolerancia a la frustración.</p>
-                    <p><strong class="font-semibold text-gray-800">Negociación y Comunicación:</strong> Habilidades de persuasión y excelente comunicación.</p>
-                    <p><strong class="font-semibold text-gray-800">Actitud de Servicio:</strong> Fuerte orientación a entender y solucionar necesidades.</p>
                 </div>
             </section>
 
-             <!-- Sección: Información Adicional -->
-             <section class="bg-white p-6 rounded-2xl shadow-lg">
-                <h2 class="text-2xl font-bold text-gray-900 border-b-2 border-blue-500 pb-2 mb-4">Información Adicional</h2>
-                <ul class="list-disc list-inside text-gray-700 space-y-2">
-                    <li>Disponibilidad para viajar: <span class="font-medium text-gray-800">Completa e inmediata.</span></li>
-                    <li>Licencia de conducir: <span class="font-medium text-gray-800">Vigente, tipo A.</span></li>
-                    <li>Disponibilidad de tiempo: <span class="font-medium text-gray-800">Completo, Lunes a Viernes.</span></li>
+            <!-- Sección: Habilidades Blandas -->
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Competencias
+                </h2>
+                <div class="grid sm:grid-cols-2 gap-x-8 gap-y-4 text-stone-700 text-lg">
+                    <p><strong class="font-semibold text-amber-700">Gestión de Proyectos:</strong> Gran capacidad de organización y planificación.</p>
+                    <p><strong class="font-semibold text-amber-700">Aceptación de Errores:</strong> Veo el fracaso como una oportunidad de aprendizaje.</p>
+                    <p><strong class="font-semibold text-amber-700">Disciplina:</strong> Altamente perseverante y con tolerancia a la frustración.</p>
+                    <p><strong class="font-semibold text-amber-700">Negociación y Comunicación:</strong> Habilidades de persuasión y excelente comunicación.</p>
+                    <p><strong class="font-semibold text-amber-700">Actitud de Servicio:</strong> Fuerte orientación a entender y solucionar necesidades.</p>
+                </div>
+            </section>
+
+            <!-- Sección: Información Adicional -->
+            <section class="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
+                <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-6 pb-4 border-b-4 border-amber-500 text-stone-900">
+                    Información Adicional
+                </h2>
+                <ul class="list-disc list-inside text-stone-700 space-y-3 text-lg">
+                    <li>Disponibilidad para viajar: <span class="font-medium text-stone-900">Completa e inmediata.</span></li>
+                    <li>Licencia de conducir: <span class="font-medium text-stone-900">Vigente, tipo A.</span></li>
+                    <li>Disponibilidad de tiempo: <span class="font-medium text-stone-900">Completo, Lunes a Viernes.</span></li>
                 </ul>
             </section>
 
         </main>
-        
-        <!-- Pie de página -->
-        <footer class="text-center mt-10 text-gray-500 text-sm">
-            <p>Portafolio de Oscar Flores Cruz &copy; 2025</p>
-        </footer>
-    </div>
 
-</body>
-</html>
-
+        <footer class="text-center mt-12 pt-8 text-stone-500 text-sm border-t border-stone-200">
+            <p>Portafolio de Oscar Flores
 
